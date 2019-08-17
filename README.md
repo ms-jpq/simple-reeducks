@@ -2,7 +2,7 @@
 
 ## An unceremonious, minimalist, and idiomatic Redux port
 
-Reeducks is stupidly simple: It uses 3 things -- Functions, Closures, and Queues.
+Reeducks 🦆🦆 is *[stupidly simple](https://github.com/crymetothemoon/simple-reeducks/blob/master/core/simple-redux.swift)*: It uses 3 things -- Functions, Closures, and Queues.
 
 It's also classless ☭☭☭
 
