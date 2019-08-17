@@ -13,6 +13,7 @@ public typealias Dispatch =
 public typealias Middleware<State> =
   (@escaping Fetch<State>, @escaping Dispatch) -> Dispatch
 
+// The return Func is unsubscribe
 public typealias Subscribe<State> =
   (DispatchQueue, @escaping (State) -> Void) -> () -> Void
 
@@ -25,7 +26,7 @@ public typealias Store<State> = (
 /*
  * Creates a bonafide Classless Redux Store ☭ ☭ ☭
  *
- * -- NOTE -- Cannot use initialize with main queue, or global queue
+ * -- NOTE -- Please use an unique sequential Queue
  */
 
 public func NewStore <State>(
@@ -34,23 +35,23 @@ public func NewStore <State>(
   middleware: Middleware<State> = { _, dispatch in dispatch },
   queue: DispatchQueue = DispatchQueue(label: "redux-queue", qos: .userInteractive))
   -> Store<State> {
-    
+
     var (state, subs) = (initial, [(id: Int, q: DispatchQueue, callback: (State) -> Void)]())
-    
+
     let fetch: Fetch<State> = { queue.sync { state }}
-    
+
     let dispatch: Dispatch = middleware(fetch) { action in
       queue.async {
         state = reducer(state, action)
         subs.forEach { (_, q, callback) in
           q.async { callback(state) }}}}
-    
+
     let subscribe: Subscribe<State> = { q, sub in
       queue.sync {
         let id = (subs.max { $0.id < $1.id }?.id ?? 0) + 1
         subs += [(id, q, sub)]
         return { queue.sync { subs.removeAll { $0.id == id }}}}}
-    
+
     return (fetch, dispatch, subscribe)}
 
 
