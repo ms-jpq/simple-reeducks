@@ -1,3 +1,10 @@
 theme: jekyll-theme-cayman
 
 title: Simple-Reeducks 🦆🦆
+
+showcase: True
+
+desc: >-
+  An unceremonious, minimalist, and idiomatic Redux port
+
+images: []
