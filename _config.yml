@@ -7,5 +7,4 @@ showcase: True
 desc: >-
   An unceremonious, minimalist, and idiomatic Redux port
 
-images:
-  - https://raw.githubusercontent.com/ms-jpq/simple-reeducks/reee/preview/duck2.jpg
+images: []
